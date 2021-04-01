@@ -18,7 +18,7 @@ public class Model {
 //    private LevelLoader levelLoader = new LevelLoader(Paths.get("E:\\Programming\\IdeaProjects\\JavaRushTasks\\out\\production\\4.JavaCollections\\com\\javarush\\task\\task34\\task3410\\res"));
 
     public Model() {
-        URL url = this.getClass().getResource("../res/ljevels.txt");
+        URL url = this.getClass().getResource("../res/levels.txt");
         String resources = null;
         if (url == null) {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
