@@ -1,0 +1,26 @@
+package com.javarush.task.task06.task0604;
+
+/* 
+Ставим котов на счётчик
+*/
+
+public class Cat {
+    public static int catCount = 0;
+
+    public Cat() {
+        catCount++;
+    }
+
+    protected void finalize() {
+        --catCount;
+    }
+
+    public static void main(String[] args) {
+        /*for (int i = 0; i < 100000 ; i++) {
+            Cat cat = new Cat();
+            cat = null;
+        }
+
+        System.out.println(catCount);*/
+    }
+}
