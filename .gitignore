@@ -6,3 +6,4 @@ target/
 *.iml
 .idea/
 /out.log*
+/JavaRushPlugin.properties
