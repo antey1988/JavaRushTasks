@@ -1,7 +1,6 @@
 package com.javarush.task.task21.task2105;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 

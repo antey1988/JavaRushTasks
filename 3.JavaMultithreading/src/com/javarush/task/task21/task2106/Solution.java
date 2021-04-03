@@ -1,8 +1,6 @@
 package com.javarush.task.task21.task2106;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /* 
 Ошибка в equals/hashCode
