@@ -4,6 +4,7 @@
 *.class
 target/
 *.iml
+*.jrtc
 .idea/
 /out.log*
 /JavaRushPlugin.properties

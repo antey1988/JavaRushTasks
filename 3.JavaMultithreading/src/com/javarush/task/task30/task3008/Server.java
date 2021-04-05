@@ -49,22 +49,29 @@ public class Server {
             while (true) {
                 request.append(requestName);
                 connection.send(new Message(MessageType.NAME_REQUEST, request.toString()));
+
                 Message ansName = connection.receive();
-                if (ansName.getType() == MessageType.USER_NAME) {
-                    String name = ansName.getData();
-                    if (!name.equals("") ) {
-                        if (!connectionMap.containsKey(name)) {
-                            connectionMap.put(name, connection);
-                            connection.send(new Message(MessageType.NAME_ACCEPTED, "Имя принято"));
-                            return name;
-                        }
-                        request = new StringBuilder("Пользователь с таким именем существует. ");
-                        continue;
-                    }
+
+                if (ansName.getType() != MessageType.USER_NAME) {
+                    request = new StringBuilder("Получен не верный тип сообщения от клиента. ");
+                    continue;
+                }
+
+                String name = ansName.getData();
+
+                if (name.equals("") ) {
                     request = new StringBuilder("Не допускается указывать пустое имя. ");
                     continue;
                 }
-                request = new StringBuilder("Получен не верный тип сообщения от клиента. ");
+
+                if (connectionMap.containsKey(name)) {
+                    request = new StringBuilder("Пользователь с таким именем существует. ");
+                    continue;
+                }
+
+                connectionMap.put(name, connection);
+                connection.send(new Message(MessageType.NAME_ACCEPTED, "Имя принято"));
+                return name;
             }
         }
 

@@ -22,8 +22,8 @@ public class Client {
         return ConsoleHelper.readInt();
     }
 
-    protected String getUserName() {
-        ConsoleHelper.writeMessage("Введите Ваше имя");
+    protected String getUserName(String text) {
+        ConsoleHelper.writeMessage(text);
         return ConsoleHelper.readString();
     }
 
@@ -66,11 +66,12 @@ public class Client {
 
         while (clientConnected) {
             String string = ConsoleHelper.readString();
-            if (string.equalsIgnoreCase("exit")) break;
 
+            if (string.equalsIgnoreCase("exit")) break;
             if (shouldSendTextFromConsole()) {
                 sendTextMessage(string);
             }
+
         }
     }
 
@@ -104,7 +105,7 @@ public class Client {
             while (true) {
                 Message message = connection.receive();
                 if (message.getType() == MessageType.NAME_REQUEST) {
-                    connection.send(new Message(MessageType.USER_NAME, getUserName()));
+                    connection.send(new Message(MessageType.USER_NAME, getUserName(message.getData())));
                 } else if (message.getType() == MessageType.NAME_ACCEPTED) {
                     notifyConnectionStatusChanged(true);
                     break;
