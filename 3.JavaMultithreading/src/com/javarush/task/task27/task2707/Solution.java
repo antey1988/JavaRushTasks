@@ -4,6 +4,9 @@ package com.javarush.task.task27.task2707;
 Определяем порядок захвата монитора
 */
 
+import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class Solution {
     public void someMethodWithSynchronizedBlocks(Object obj1, Object obj2) {
         synchronized (obj1) {
@@ -14,8 +17,10 @@ public class Solution {
     }
 
     public static boolean isLockOrderNormal(final Solution solution, final Object o1, final Object o2) throws Exception {
-        //do something here
-        Thread thread1 = new Thread(()->{
+        ArrayList l = new ArrayList();
+        l.remove(0);
+        AtomicBoolean flag = new AtomicBoolean(false);
+        Thread thread2 = new Thread(() -> {
             synchronized (o1) {
                 try {
                     Thread.sleep(500);
@@ -23,27 +28,21 @@ public class Solution {
                     Thread.currentThread().interrupt();
                 }
                 synchronized (o2) {
-                    System.out.println(o1 + " " + o2);
+                    flag.set(true);
                 }
             }
         });
-        thread1.start();
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        Thread thread2 = new Thread(()->solution.someMethodWithSynchronizedBlocks(o1,o2));
+        thread2.setDaemon(true);
         thread2.start();
-
+        Thread thread1 = new Thread(()->solution.someMethodWithSynchronizedBlocks(o1, o2));
+        thread1.setDaemon(true);
+        thread1.start();
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
-        return false;
+        return flag.get();
     }
 
     public static void main(String[] args) throws Exception {
