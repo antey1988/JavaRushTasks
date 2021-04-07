@@ -24,6 +24,10 @@ public class Solution {
         Comparator<People> c4 = Comparator.comparingInt(People::getHeight);
 
         Comparator[] vararg = {c4, c1};
+        /*vararg[0] = c4;
+        vararg[1] = c3;
+        vararg[2] = c2;
+        vararg[3] = c1;*/
 
         peoples.sort(new CustomizedComparator<People>(vararg));
         peoples.forEach(System.out::println);

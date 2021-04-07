@@ -1,5 +1,8 @@
 package com.javarush.task.task29.task2909.human;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Teacher extends UniversityPerson {
     private int numberOfStudents;
 

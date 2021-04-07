@@ -4,7 +4,6 @@ package com.javarush.task.task27.task2707;
 Определяем порядок захвата монитора
 */
 
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Solution {
@@ -17,8 +16,6 @@ public class Solution {
     }
 
     public static boolean isLockOrderNormal(final Solution solution, final Object o1, final Object o2) throws Exception {
-        ArrayList l = new ArrayList();
-        l.remove(0);
         AtomicBoolean flag = new AtomicBoolean(false);
         Thread thread2 = new Thread(() -> {
             synchronized (o1) {
