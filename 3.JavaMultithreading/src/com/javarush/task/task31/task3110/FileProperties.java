@@ -1,7 +1,5 @@
 package com.javarush.task.task31.task3110;
 
-import java.io.File;
-
 public class FileProperties {
     private String name;
     private long size;
@@ -14,6 +12,7 @@ public class FileProperties {
         this.compressedSize = compressedSize;
         this.compressionMethod = compressionMethod;
     }
+
 
     public String getName() {
         return name;
@@ -32,41 +31,25 @@ public class FileProperties {
     }
 
     public long getCompressionRatio() {
+        // Вычисляем степень сжатия
         return 100 - ((compressedSize * 100) / size);
     }
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder(name);
-        /*if (size > 0) {
-            double sizeKb = size;
-            String sizeUnit = "b";
-            double compressedSizeKb = compressedSize;
-            String compressedSizeUnit = "b";
-            if (size > 1023) {
-                sizeKb = sizeKb / 1024;
-                sizeUnit = "Kb";
-                if (compressedSize > 1023) {
-                    compressedSizeKb = compressedSizeKb / 1024;
-                    compressedSizeUnit = "Kb";
-                }
-            }
-            builder.append(String.format("\t%.2f %s (%.2f %s) сжатие: %d%%",
-                    sizeKb, sizeUnit, compressedSizeKb, compressedSizeUnit, getCompressionRatio()));
-        }*/
+        // Строим красивую строку из свойств
+        StringBuilder builder = new StringBuilder();
+        builder.append(name);
         if (size > 0) {
             builder.append("\t");
-            builder.append(size / 1024);
-            builder.append(" Kb (");
-            builder.append(compressedSize / 1024);
-            builder.append(" Kb) сжатие: ");
+            builder.append(size > 1023 ? size / 1024.0 : size);
+            builder.append(size > 1023 ? " Kb (" : " b (");
+            builder.append(compressedSize > 1023 ? compressedSize / 1024.0 : compressedSize);
+            builder.append(compressedSize > 1023 ? " Kb) сжатие: " : " b) сжатие: ");
             builder.append(getCompressionRatio());
             builder.append("%");
         }
-        return builder.toString();
-    }
 
-    public static void main(String[] args) {
-        System.out.println(new FileProperties("Name", 8192, 2048, 2).toString());
+        return builder.toString();
     }
 }
